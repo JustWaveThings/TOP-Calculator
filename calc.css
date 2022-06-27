@@ -5,6 +5,7 @@ layout
 
 calc class calc
     display class display 
+        displaynums class displaynums
     operators class operatorContainer
         add class operator
         subtract class operator
@@ -30,9 +31,6 @@ calc class calc
                 . class period
                 C class clear 
         
-
-
-
 
 */
 .body {
