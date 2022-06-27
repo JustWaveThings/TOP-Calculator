@@ -11,24 +11,24 @@ calc
         multiply
         divide
     numsequals
-        equal
-        nums
-            r1
-                7
-                8
-                9
-            r2
-                4
-                5
-                6
-            r3
-                1
-                2
-                3
-            r4
-                0
-                .
-                C
+        equal class equal
+        nums class nums
+            row 1 class row
+                7 class num
+                8 class num
+                9 class num
+            row 2 class row
+                4 class num
+                5 class num
+                6 class num
+            row 3 class row
+                1 class num
+                2 class num
+                3 class num
+            row 4 class row 
+                0 class num
+                . class period
+                C class clear 
         
 
 
