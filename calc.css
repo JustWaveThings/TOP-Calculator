@@ -3,14 +3,14 @@
 /* 
 layout 
 
-calc
-    display
-    operators
-        add
-        subtract
-        multiply
-        divide
-    numsequals
+calc class calc
+    display class display 
+    operators class operatorContainer
+        add class operator
+        subtract class operator
+        multiply class operator
+        divide class operator
+    numsequals class numequalsContainer
         equal class equal
         nums class nums
             row 1 class row
