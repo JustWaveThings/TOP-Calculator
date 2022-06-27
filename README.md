@@ -1,2 +1,2 @@
 # TOP-Calculator
-Making a calculator from scratch
+Make a calculator from scratch.
