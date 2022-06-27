@@ -12,7 +12,6 @@ calc class calc
         multiply class operator
         divide class operator
     numsequals class numequalsContainer
-        equal class equal
         nums class nums
             row 1 class row
                 7 class num
@@ -29,7 +28,8 @@ calc class calc
             row 4 class row 
                 0 class num
                 . class period
-                C class clear 
+                C class clear
+        equal class equal
         
 
 */
