@@ -12,7 +12,7 @@ calc class calc
         multiply class operator
         divide class operator
     numsequals class numequalsContainer
-        nums class nums
+        nums class numsContainer
             row 1 class row
                 7 class num
                 8 class num
@@ -40,4 +40,48 @@ calc class calc
     color: #F9FAF8;
     display: flex;
     flex-direction: row;
+}
+
+.container {
+
+}
+
+.calc {
+
+}
+
+.display {
+
+}
+
+.displaynums {
+
+}
+
+.operatorContainer {
+
+}
+
+.operator {
+
+}
+
+.numEqualsContainer {
+
+}
+
+.numsContainer {
+
+}
+
+.row {
+
+}
+
+.num {
+
+}
+
+.equal {
+
 }
