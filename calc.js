@@ -35,21 +35,27 @@ Create the functions that populate the display when you click the number buttons
 */
 
 
+const numArray = [];
 
-function disp(result = "StandBy") {
-  return document.getElementById('displayNums').textContent = result;
+function disp(numArray) {
+  return document.getElementById('displayNums').textContent = numArray;
 }
-const displayValue = disp();
 
-
+const displayValue = disp(numArray);
 
 const calcButtons = document.querySelectorAll('.num , .operator, .equal');
 
 calcButtons.forEach((button) =>
-  button.addEventListener("click", function (e) {
-    console.log(button.id);
+  button.addEventListener("click", () => {
+    numArray.push(button.id);
+    console.log(numArray.join(''));
+    disp(numArray.join(''));
   })
 );
+
+
+
+
 
 
 
