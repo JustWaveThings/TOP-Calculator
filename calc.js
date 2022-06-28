@@ -35,23 +35,25 @@ Create the functions that populate the display when you click the number buttons
 */
 
 
-const numArray = [];
+const dispArray = [];
 
-function disp(numArray) {
-  return document.getElementById('displayNums').textContent = numArray;
+function disp(dispArray) {
+  return document.getElementById('displayNums').textContent = dispArray;
 }
 
-const displayValue = disp(numArray);
+const displayValue = disp(dispArray);
 
 const calcButtons = document.querySelectorAll('.num , .operator, .equal');
 
 calcButtons.forEach((button) =>
   button.addEventListener("click", () => {
-    numArray.push(button.id);
-    console.log(numArray.join(''));
-    disp(numArray.join(''));
+    dispArray.push(button.id);
+    console.log(`what should display on screen: ${dispArray.join('')}`);
+    disp(dispArray.join(''));
   })
 );
+
+
 
 
 
