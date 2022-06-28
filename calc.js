@@ -43,6 +43,32 @@ const displayValue = disp();
 
 
 
+const calcButtons = document.querySelectorAll('.num , .operator, .equal');
+
+calcButtons.forEach((button) =>
+  button.addEventListener("click", function (e) {
+    console.log(button.id);
+  })
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
