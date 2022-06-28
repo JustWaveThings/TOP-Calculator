@@ -27,20 +27,22 @@ function operate (num1, num2, operation) {
     return operation(num1, num2);
 }
 
-console.log(operate(2000, 2, multiply));
+// console.log(operate(2000, 2, multiply));
 
 
 /*
 Create the functions that populate the display when you click the number buttons… you should be storing the ‘display value’ in a variable somewhere for use in the next step.
 */
 
-const disp = Element.querySelector(displayNums);
-  
-result = "testing";
 
-const displayValue = (result) => (disp.textContent);
 
-displayValue();
+function disp(result = "StandBy") {
+  return document.getElementById('displayNums').textContent = result;
+}
+const displayValue = disp();
+
+
+
 
 
 /*
