@@ -1,87 +1,100 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-/* 
-layout 
 
-calc class calc
-    display class display 
-        displaynums class displaynums
-    operators class operatorContainer
-        add class operator
-        subtract class operator
-        multiply class operator
-        divide class operator
-    numsequals class numequalsContainer
-        nums class numsContainer
-            row 1 class row
-                7 class num
-                8 class num
-                9 class num
-            row 2 class row
-                4 class num
-                5 class num
-                6 class num
-            row 3 class row
-                1 class num
-                2 class num
-                3 class num
-            row 4 class row 
-                0 class num
-                . class period
-                C class clear
-        equal class equal
-        
-
-*/
 .body {
     background-color:  rgb(85, 103, 138);
     font-family: Roboto, sans-serif;
     font-size: 24px;
-    color: #F9FAF8;
+    color: #000000;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
 }
 
 .container {
-
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
 }
 
 .calc {
-
+    display: flex;
+    flex-direction: column;
+    background-color:aliceblue;
+    
+    padding: 16px;
+    gap: 10px;
+    
 }
 
 .display {
-
+    display: flex;
+    background-color: #000000;
+    
 }
 
 .displaynums {
-
+    display: flex;
+    padding: 8px;
+    background-color: gray;
+    color: aquamarine;
 }
 
 .operatorContainer {
-
+    display:flex;
+    
+     
 }
 
 .operator {
-
+    flex: 1;
+    background-color: pink;
+    
 }
 
 .numEqualsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
 }
 
 .numsContainer {
-
+    display: flex;
+    flex-direction: column;
+    flex: 3;
 }
 
-.row {
-
+.row,
+.equal {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
 }
+
+.num,
+.operator,
+.equal {
+    padding: 16px;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #4db850;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+        
+}
+
+
 
 .num {
-
+    background-color: antiquewhite;
 }
 
 .equal {
+   
+   background-color: rgb(247, 100, 125);
+}
 
+#dot .inactive {
+    cursor: not-allowed;
 }
