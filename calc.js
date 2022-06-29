@@ -30,31 +30,44 @@ Create the functions that populate the display when you click the number buttons
 
 /// ****** ADDITIONAL ADVICE sought / received.  ***** separate dom element manipulation from 'logic code'. Once logic is complete -- serve that info to the dom modifiers. Please excuse the excessive comments. I need them to straighten this out. I know this is not best practice for code comments.
 
-const memoryArray = []; // LOGIC - holds all the elements of each operand and operator and result.
-const displayArray = [];  // ??? I need to unpack this and the next line. Something is not clicking.
-const displayValue = disp(displayArray);  // ???
+const memory = []; // LOGIC - holds all the elements of each complete operand and operator and result to be available to be evaluated or cleared.
+const numberOrOperatorInProgress = [];
+function uncommittedNumbers(buttonClick) {
+  numberOrOperatorInProgress.push(buttonClick)
+}
+console.log(numberOrOperatorInProgress);
 
-//
-function disp(displayArray) {
-  return document.getElementById('displayNums').textContent = displayArray; // dom
+//LOGIC -  holds an array of the current numbers or single operator that upon activating action, will be added to memory
+
+
+
+// const displayValue = disp(displayArray);  // ???
+
+
+function disp(numberOrOperatorInProgress) {
+  return document.getElementById('displayNums').textContent = numberOrOperatorInProgress; // dom
 }
 
 const calcButtons = document.querySelectorAll('.num , .operator, .equal');  // dom
 
-calcButtons.forEach((button) =>
-  button.addEventListener("click", () => {
-    displayArray.push(button.id); // logic - this is how we get the button clicked into the array, which will increase  trigger the logic to work.
-    disp(displayArray.join('')); // dom 
-  })
-);
+calcButtons.forEach((button) =>  // dom - adds event listeners to buttons
+  button.addEventListener("click", function target(e) {
+    uncommittedNumbers(button.id);
+  } // logic - this is how we get the button clicked on the page into the numberOrOperatorInProgress
+));
+
 
 // handle logic section  // no dom manipulation allowed here. 
-const arrayStatus = memoryArray.length; //  logic 
-const arrayStatusObj = { empty: 0, operator_pending: 1, number_pending: 2 }; // logic 
+
+const arrayStatusObj = {empty: 0, operator_pending: 1, number_pending: 2 }; // logic 
+const arrayStatus = (memory.length === 0) ? 'empty' : memory.length; //  logic 
+// console.log(arrayStatus);
 
 
-function memoryArrayHandler(arrStatus ) { // all logic in this function 
-  if (arrStatus === arrStatus.empty) {
+
+
+function memoryHandler(arrStatus) { // all logic in this function 
+  if (arrStatus === arrayStatusObj.empty) {
     /*
        - if displayValue.length is === 0,  ignore all inputs except numbers, and dot.
           - else enable all buttons except equals
@@ -65,33 +78,32 @@ function memoryArrayHandler(arrStatus ) { // all logic in this function
     // if (displayValue.length === 0) {
       
     // }
-    console.log("in the first codeblock")
-  } else if (arrStatus === arrStatus.operator_pending) {
+    //console.log("in the first codeblock of memoryHandler")
+  } else if (arrStatus === arrayStatusObj.operator_pending) {
     /* 
        - listen to all inputs except equals and handle per refactor logic below
        - array.push() on number hit after operator hit
        - splice to clear array if clear hit
     */
-    console.log("in the 2nd codeblock");
-    
-  } else if (arrStatus === arrStatus.number_pending) {
+    //console.log("in the 2nd codeblock");
+  } else if (arrStatus === arrayStatusObj.number_pending) {
     /* 
       - ignore equal 
       - if the next to last element is a '/' and the last is '0' = display "Div by 0 Error" and disable all buttons except clear (maybe turn it a different color too)
     */
-     console.log("in the 3rd codeblock");
+   // console.log("in the 3rd codeblock");
   } else {
     /* 
         - first chance to evaluate pattern. Should be a slam dunk as it's not possible to really input the wrong things
-            - evaluate memoryArray for the pattern operand operator operand:
+            - evaluate memory for the pattern operand operator operand:
               if true pass them to operate() function
-              if false something is wrong at the first iteration (arrStatus === 3) (throw an error), after the first iteration - beyond index[2] - we'd continue evaluating at every increase in the memoryArray.length
+              if false something is wrong at the first iteration (arrStatus === 3) (throw an error), after the first iteration - beyond index[2] - we'd continue evaluating at every increase in the memory.length
     */
-    console.log("in the 4th codeblock - the else");
+    //console.log("in the 4th codeblock - the else");
   }
 }
 
-console.log(memoryArrayHandler(arrayStatusObj));
+
 
 
 
@@ -105,7 +117,7 @@ basic use case (normal // expected use)
 
       Refactor --- using same example '5 * 2 / 5 ='
 
-      arrayMemory after each 'step'
+      memory after each 'step'
         [5] - user
         [5, *] - user
         [5, *, 2] - user
@@ -117,8 +129,8 @@ basic use case (normal // expected use)
         - based on this, it looks like we need to evaluate the array's last 3 elements and if it matches a pattern of operand - operator - operand, then we evaluate, append to array and display 
 
       for the refactored path we'd need to use:
-        - arrayMemory to hold user inputs and the returned evaluations  (done)
-        - array method to append user inputs / evaluations to arrayMemory (push())
+        - memory to hold user inputs and the returned evaluations  (done)
+        - array method to append user inputs / evaluations to memory (push())
         - array method to evaluate last 3 elements of array (switch or generic conditional)
         - clear array function when user hits clear (splice() with a 100 element delete argument )
         - pre-path logic that REPLACES the last operator in the array if operator is hit. ex: user hit wrong operator, or hit same operator twice or more times.  (if operator, check last element to see if its also an operator. if different operator, replace last element not append array, else, don't append array and continue)
@@ -140,13 +152,13 @@ basic use case (normal // expected use)
         - Round to 4 decimal places if needed. Don't put 0's on to pad.  (conditional that tests how many decimal places are in the returned evaluation and calls round(), else doesn't change value.)
         
 
-      - handling arrayMemory (DONE)
+      - handling memory (DONE)
         - if statement to check length of array
 
      
      
       - evaluating  (DONE)
-        - this is already handled in the operate() function - we pass num1, num2, num3  from the arrayMemory
+        - this is already handled in the operate() function - we pass num1, num2, num3  from the memory
 
 
 let's get it done!! 
