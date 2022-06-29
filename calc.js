@@ -28,37 +28,33 @@ Create the functions that populate the display when you click the number buttons
 */
 
 
-/// ****** ADDITIONAL ADVICE ***** separate dom element manipulation from 'logic code'. Once logic is complete -- serve that info to the dom modifiers. 
+/// ****** ADDITIONAL ADVICE sought / received.  ***** separate dom element manipulation from 'logic code'. Once logic is complete -- serve that info to the dom modifiers. Please excuse the excessive comments. I need them to straighten this out. I know this is not best practice for code comments.
 
-const arrayMemory = []; // LOGIC holds the complete operands and operators and results as elements in an array
-const displayArray = [];  //
-const displayValue = disp(displayArray); 
+const memoryArray = []; // LOGIC - holds all the elements of each operand and operator and result.
+const displayArray = [];  // ??? I need to unpack this and the next line. Something is not clicking.
+const displayValue = disp(displayArray);  // ???
 
 //
 function disp(displayArray) {
-  return document.getElementById('displayNums').textContent = displayArray;
+  return document.getElementById('displayNums').textContent = displayArray; // dom
 }
 
-const calcButtons = document.querySelectorAll('.num , .operator, .equal');  // 
+const calcButtons = document.querySelectorAll('.num , .operator, .equal');  // dom
 
 calcButtons.forEach((button) =>
   button.addEventListener("click", () => {
-    displayArray.push(button.id); // dom and logic... 
-    disp(displayArray.join('')); // dom
+    displayArray.push(button.id); // logic - this is how we get the button clicked into the array, which will increase  trigger the logic to work.
+    disp(displayArray.join('')); // dom 
   })
 );
 
-console.log({ displayValue });
-
-// handle logic section 
-const arrayStatus = arrayMemory.length;
-
-const arrayStatusNamed = { empty: 0, operator_pending: 1, number_pending: 2 };
+// handle logic section  // no dom manipulation allowed here. 
+const arrayStatus = memoryArray.length; //  logic 
+const arrayStatusObj = { empty: 0, operator_pending: 1, number_pending: 2 }; // logic 
 
 
-
-function arrayHandler(arrStatus ) {
-  if (arrStatus.empty) {
+function memoryArrayHandler(arrStatus ) { // all logic in this function 
+  if (arrStatus === arrStatus.empty) {
     /*
        - if displayValue.length is === 0,  ignore all inputs except numbers, and dot.
           - else enable all buttons except equals
@@ -69,30 +65,33 @@ function arrayHandler(arrStatus ) {
     // if (displayValue.length === 0) {
       
     // }
-    console.log("hey")
-  } else if (arrStatus === 1) {
+    console.log("in the first codeblock")
+  } else if (arrStatus === arrStatus.operator_pending) {
     /* 
        - listen to all inputs except equals and handle per refactor logic below
        - array.push() on number hit after operator hit
        - splice to clear array if clear hit
     */
+    console.log("in the 2nd codeblock");
     
-  } else if (arrStatus === 2) {
+  } else if (arrStatus === arrStatus.number_pending) {
     /* 
       - ignore equal 
       - if the next to last element is a '/' and the last is '0' = display "Div by 0 Error" and disable all buttons except clear (maybe turn it a different color too)
     */
+     console.log("in the 3rd codeblock");
   } else {
     /* 
         - first chance to evaluate pattern. Should be a slam dunk as it's not possible to really input the wrong things
-            - evaluate arrayMemory for the pattern operand operator operand:
+            - evaluate memoryArray for the pattern operand operator operand:
               if true pass them to operate() function
-              if false something is wrong at the first iteration (arrStatus === 3) (throw an error), after the first iteration - beyond index[2] - we'd continue
+              if false something is wrong at the first iteration (arrStatus === 3) (throw an error), after the first iteration - beyond index[2] - we'd continue evaluating at every increase in the memoryArray.length
     */
+    console.log("in the 4th codeblock - the else");
   }
 }
 
-arrayHandler(arrayStatusNamed);
+console.log(memoryArrayHandler(arrayStatusObj));
 
 
 
