@@ -10,80 +10,95 @@ Create a new function operate that takes an operator and 2 numbers and then call
 function add(num1, num2) {
     return num1 + num2;
 }
-
 function subtract(num1, num2) {
   return num1 - num2;
 }
-
 function multiply(num1, num2) {
   return num1 * num2;
 }
-
 function divide(num1, num2) {
   return num1 / num2;
 }
-
 function operate (num1, num2, operation) {
     return operation(num1, num2);
 }
-
-// console.log(operate(2000, 2, multiply));
-
 
 /* instructions 
 Create the functions that populate the display when you click the number buttons… you should be storing the ‘display value’ in a variable somewhere for use in the next step.
 */
 
 
+/// ****** ADDITIONAL ADVICE ***** separate dom element manipulation from 'logic code'. Once logic is complete -- serve that info to the dom modifiers. 
 
-const arrayMemory = [];
-const displayArray = []; 
-const displayValue = disp(displayArray);
+const arrayMemory = []; // LOGIC holds the complete operands and operators and results as elements in an array
+const displayArray = [];  //
+const displayValue = disp(displayArray); 
 
-
-
+//
 function disp(displayArray) {
   return document.getElementById('displayNums').textContent = displayArray;
 }
 
-
-const calcButtons = document.querySelectorAll('.num , .operator, .equal'); 
+const calcButtons = document.querySelectorAll('.num , .operator, .equal');  // 
 
 calcButtons.forEach((button) =>
   button.addEventListener("click", () => {
-    displayArray.push(button.id);
-    console.log(`what should display on screen: ${displayArray.join('')}`);
-    disp(displayArray.join(''));
+    displayArray.push(button.id); // dom and logic... 
+    disp(displayArray.join('')); // dom
   })
 );
 
-
-console.log(displayValue);
-
+console.log({ displayValue });
 
 // handle logic section 
-
 const arrayStatus = arrayMemory.length;
 
-function arrayHandler(arrStatus) {
-  if (arrStatus === 0) {
+const arrayStatusNamed = { empty: 0, operator_pending: 1, number_pending: 2 };
+
+
+
+function arrayHandler(arrStatus ) {
+  if (arrStatus.empty) {
     /*
-      - disable(or ignore) all inputs except numbers, and dot
-              - once dot has been clicked, and another number has been clicked, disable dot button until operator button hit
-            - if minus is hit display message "premium feature"
+       - if displayValue.length is === 0,  ignore all inputs except numbers, and dot.
+          - else enable all buttons except equals
+       - once dot has been clicked, and then another number has been clicked, disable dot button until operator button hit
+       - if minus is hit display alert "premium feature" (project doesn't explicitly say we have to deal with negative operands)
+       - array.push() once numbers are entered and operator is hit
     */
+    // if (displayValue.length === 0) {
+      
+    // }
+    console.log("hey")
   } else if (arrStatus === 1) {
     /* 
-    - enable all inputs and handle per refactor logic above
-             - if the next to last element is a '/' and the last is '0' = display "Div by 0 Error" and disable all buttons except clear (maybe turn it a different color too)
+       - listen to all inputs except equals and handle per refactor logic below
+       - array.push() on number hit after operator hit
+       - splice to clear array if clear hit
+    */
+    
+  } else if (arrStatus === 2) {
+    /* 
+      - ignore equal 
+      - if the next to last element is a '/' and the last is '0' = display "Div by 0 Error" and disable all buttons except clear (maybe turn it a different color too)
+    */
+  } else {
+    /* 
+        - first chance to evaluate pattern. Should be a slam dunk as it's not possible to really input the wrong things
+            - evaluate arrayMemory for the pattern operand operator operand:
+              if true pass them to operate() function
+              if false something is wrong at the first iteration (arrStatus === 3) (throw an error), after the first iteration - beyond index[2] - we'd continue
     */
   }
-
 }
+
+arrayHandler(arrayStatusNamed);
+
+
 
 
 /* 
-pseudocode for calc logic:
+pseudocode for calc logic ( there have been updates in the code blocks as new things were uncovered that below did not address -- like checking the length of the number in process at arrStatus === 0):
 
 basic use case (normal // expected use)
 
@@ -112,9 +127,9 @@ basic use case (normal // expected use)
 
     Attack evaluating the inputs and refining the output before display; 
 
-      - input 
+      - input  ** waiting to be coded out ***
           at array[]
-            - disable(or ignore) all inputs except numbers, and dot
+            - disable(or ignore) all inputs except numbers, and dot 
               - once dot has been clicked, and another number has been clicked, disable dot button until operator button hit
             - if minus is hit display message "premium feature"
           at array[0]
@@ -126,12 +141,12 @@ basic use case (normal // expected use)
         - Round to 4 decimal places if needed. Don't put 0's on to pad.  (conditional that tests how many decimal places are in the returned evaluation and calls round(), else doesn't change value.)
         
 
-      - handling arrayMemory
+      - handling arrayMemory (DONE)
         - if statement to check length of array
 
      
      
-      - evaluating  
+      - evaluating  (DONE)
         - this is already handled in the operate() function - we pass num1, num2, num3  from the arrayMemory
 
 
