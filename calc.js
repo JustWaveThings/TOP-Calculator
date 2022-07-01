@@ -30,40 +30,24 @@ Create the functions that populate the display when you click the number buttons
 
 /// ****** ADDITIONAL ADVICE sought / received.  ***** separate dom element manipulation from 'logic code'. Once logic is complete -- serve that info to the dom modifiers. Please excuse the excessive comments. I need them to straighten this out. I know this is not best practice for code comments.
 
-const memory = []; // LOGIC - holds all the elements of each complete operand and operator and result to be available to be evaluated or cleared.
-const numberOrOperatorInProgress = [];
-function uncommittedNumbers(buttonClick) {
-  numberOrOperatorInProgress.push(buttonClick)
-}
-console.log(numberOrOperatorInProgress);
-
-//LOGIC -  holds an array of the current numbers or single operator that upon activating action, will be added to memory
-
-
-
-// const displayValue = disp(displayArray);  // ???
-
-
-function disp(numberOrOperatorInProgress) {
-  return document.getElementById('displayNums').textContent = numberOrOperatorInProgress; // dom
-}
+const memory = []; // LOGIC - holds in each element a complete operand, operator, or result to be available to be evaluated or cleared.
+const numberOrOperatorInProgress = [];  //LOGIC -  holds an array of the current numbers or single operator that upon activating action, will be added to memory
 
 const calcButtons = document.querySelectorAll('.num , .operator, .equal');  // dom
 
-calcButtons.forEach((button) =>  // dom - adds event listeners to buttons
-  button.addEventListener("click", function target(e) {
-    uncommittedNumbers(button.id);
-  } // logic - this is how we get the button clicked on the page into the numberOrOperatorInProgress
-));
+calcButtons.forEach((button) => button.addEventListener("click", (e) => (numberOrOperatorInProgress.push(button.id), display())));
+ // logic - this is how we get the button clicked on the page into the numberOrOperatorInProgress and how we display the numbers on the screen.
 
+
+const display = () => document.getElementById('displayNums').textContent = numberOrOperatorInProgress.join(''); // dom
+
+const uncommittedNumber = display; // separates logic from dom use
 
 // handle logic section  // no dom manipulation allowed here. 
 
 const arrayStatusObj = {empty: 0, operator_pending: 1, number_pending: 2 }; // logic 
 const arrayStatus = (memory.length === 0) ? 'empty' : memory.length; //  logic 
-// console.log(arrayStatus);
-
-
+// console.log(arrayStatus)
 
 
 function memoryHandler(arrStatus) { // all logic in this function 
