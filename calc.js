@@ -25,18 +25,16 @@ function operate (num1, num2, operation) {
 
 /* instructions 
 Create the functions that populate the display when you click the number buttons… you should be storing the ‘display value’ in a variable somewhere for use in the next step.
-*/
 
-
-/// ****** ADDITIONAL ADVICE sought / received.  ***** separate dom element manipulation from 'logic code'. Once logic is complete -- serve that info to the dom modifiers. Please excuse the excessive comments. I need them to straighten this out. I know this is not best practice for code comments.
+ ****** ADDITIONAL ADVICE sought / received.  ***** separate dom element manipulation from 'logic code'. Once logic is complete -- serve that info to the dom modifiers. Please excuse the excessive comments. I need them to straighten this out. I know this is not best practice for code comments. */
 
 const memory = []; // LOGIC - holds in each element a complete operand, operator, or result to be available to be evaluated or cleared.
 const numberOrOperatorInProgress = [];  //LOGIC -  holds an array of the current numbers or single operator that upon activating action, will be added to memory
 
 const calcButtons = document.querySelectorAll('.num , .operator, .equal');  // dom
 
-calcButtons.forEach((button) => button.addEventListener("click", (e) => (numberOrOperatorInProgress.push(button.id), display())));
- // logic - this is how we get the button clicked on the page into the numberOrOperatorInProgress and how we display the numbers on the screen.
+calcButtons.forEach((button) => button.addEventListener("click", (e) => (numberOrOperatorInProgress.push(button.id), display(), memoryHandler())));
+ // logic - this is how we get the button clicked on the page into the numberOrOperatorInProgress and how we display the numbers on the screen at the time of click.
 
 
 const display = () => document.getElementById('displayNums').textContent = numberOrOperatorInProgress.join(''); // dom
@@ -45,12 +43,23 @@ const uncommittedNumber = display; // separates logic from dom use
 
 // handle logic section  // no dom manipulation allowed here. 
 
-const arrayStatusObj = {empty: 0, operator_pending: 1, number_pending: 2 }; // logic 
-const arrayStatus = (memory.length === 0) ? 'empty' : memory.length; //  logic 
-// console.log(arrayStatus)
+const arrayStatusObj = {
+  empty: 0,
+  operator_pending: 1,
+  number_pending: 2,
+}; // logic
 
+// const arrayStatus = (memory.length === 0) ? 'empty' : memory.length; //  logic 
 
-function memoryHandler(arrStatus) { // all logic in this function 
+const uncommittedNumberLengthDefinitions = {
+  empty: 0,
+
+  
+}
+
+// memoryHandler is main workhorse of the calc.  It's responsible for monitoring uncommittedNumber and memory and acting when certain conditions of them each are met and calling the utility functions to 'operate the calc. I will be very interested to see how others have completed this part of the project. I have many nested conditionals and that makes me nervous but I don't see a way around it. 
+
+function memoryHandler(arrStatus = memory.length) { //all logic in this function 
   if (arrStatus === arrayStatusObj.empty) {
     /*
        - if displayValue.length is === 0,  ignore all inputs except numbers, and dot.
@@ -59,17 +68,21 @@ function memoryHandler(arrStatus) { // all logic in this function
        - if minus is hit display alert "premium feature" (project doesn't explicitly say we have to deal with negative operands)
        - array.push() once numbers are entered and operator is hit
     */
-    // if (displayValue.length === 0) {
+    
+    console.log("in the first codeblock of memoryHandler");
+
+    (uncommittedNumber().length === uncommittedNumberLengthDefinitions.empty) ? console.log(`in the first codeblock of memoryHandler, first if-${uncommittedNumber.uncommittedNumberLengthDefinitions.empty}`) :  console.log(`the current length of uncommittedNumber is ${uncommittedNumber().length}`)
       
-    // }
-    //console.log("in the first codeblock of memoryHandler")
+    
+   
+
   } else if (arrStatus === arrayStatusObj.operator_pending) {
     /* 
        - listen to all inputs except equals and handle per refactor logic below
        - array.push() on number hit after operator hit
        - splice to clear array if clear hit
     */
-    //console.log("in the 2nd codeblock");
+    console.log("in the 2nd codeblock");
   } else if (arrStatus === arrayStatusObj.number_pending) {
     /* 
       - ignore equal 
@@ -87,6 +100,13 @@ function memoryHandler(arrStatus) { // all logic in this function
   }
 }
 
+function evaluateLastAction(lastAction = uncommittedNumber[uncommittedNumber.length - 1]) {
+  (lastAction === "=") ?  :  ; 
+  (lastAction ===  "+ - / *") ? :  ; 
+  (lastAction === dot ) ? : ; 
+  (lastAction === clear ) ? :  ; 
+  (lastAction === nums ) ? :  ; 
+}
 
 
 
