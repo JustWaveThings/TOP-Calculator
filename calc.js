@@ -33,7 +33,17 @@ const numberOrOperatorInProgress = [];  //LOGIC -  holds an array of the current
 
 const calcButtons = document.querySelectorAll('.num , .operator, .equal');  // dom
 
-calcButtons.forEach((button) => button.addEventListener("click", (e) => (numberOrOperatorInProgress.push(button.id), display(), memoryHandler())));
+calcButtons.forEach((button) =>
+  button.addEventListener(
+    "click",
+    (e) => (
+      numberOrOperatorInProgress.push(button.id),
+      display(),
+      memoryHandler(),
+      console.log(evaluateLastAction())
+    )
+  )
+);
  // logic - this is how we get the button clicked on the page into the numberOrOperatorInProgress and how we display the numbers on the screen at the time of click.
 
 
@@ -53,8 +63,6 @@ const arrayStatusObj = {
 
 const uncommittedNumberLengthDefinitions = {
   empty: 0,
-
-  
 }
 
 // memoryHandler is main workhorse of the calc.  It's responsible for monitoring uncommittedNumber and memory and acting when certain conditions of them each are met and calling the utility functions to 'operate the calc. I will be very interested to see how others have completed this part of the project. I have many nested conditionals and that makes me nervous but I don't see a way around it. 
@@ -64,18 +72,13 @@ function memoryHandler(arrStatus = memory.length) { //all logic in this function
     /*
        - if displayValue.length is === 0,  ignore all inputs except numbers, and dot.
           - else enable all buttons except equals
-       - once dot has been clicked, and then another number has been clicked, disable dot button until operator button hit
        - if minus is hit display alert "premium feature" (project doesn't explicitly say we have to deal with negative operands)
        - array.push() once numbers are entered and operator is hit
     */
     
     console.log("in the first codeblock of memoryHandler");
-
-    (uncommittedNumber().length === uncommittedNumberLengthDefinitions.empty) ? console.log(`in the first codeblock of memoryHandler, first if-${uncommittedNumber.uncommittedNumberLengthDefinitions.empty}`) :  console.log(`the current length of uncommittedNumber is ${uncommittedNumber().length}`)
-      
     
-   
-
+  
   } else if (arrStatus === arrayStatusObj.operator_pending) {
     /* 
        - listen to all inputs except equals and handle per refactor logic below
@@ -100,87 +103,82 @@ function memoryHandler(arrStatus = memory.length) { //all logic in this function
   }
 }
 
-function evaluateLastAction(lastAction = uncommittedNumber[uncommittedNumber.length - 1]) {
-  (lastAction === "=") ?  :  ; 
-  (lastAction ===  "+ - / *") ? :  ; 
-  (lastAction === dot ) ? : ; 
-  (lastAction === clear ) ? :  ; 
-  (lastAction === nums ) ? :  ; 
+function evaluateLastAction(lastAction = uncommittedNumber()) {
+  switch (lastAction) {
+    case "=":
+      break;
+    case "+" || "-" || "*" || "/":
+      if (lastAction === "+") operate(num1, num2, add);
+      if (lastAction === "-") operate(num1, num2, subtract);
+      if (lastAction === "*") operate(num1, num2, multiply);
+      if (lastAction === "/") operate(num1, num2, divide);
+      break;
+    case "dot":
+      /* this will hold all the dot logic of when to allow and when to disallow, as well as when to effectively toggle the dot on the screen */
+      (uncommittedNumber().length = "0" || uncommittedNumber().includes(".")) ? console.log("we have a dot do ignore") : console.log("false leg of dot switch")
+      
+      
+
+      break;
+    case "clear":
+      break;
+    case "nums":
+      break;
+    default:
+      console.log("there has been an error in the evaluate last Action switch");
+  };
 }
+// /* 
+// pseudocode for calc logic ( there have been updates in the code blocks as new things were uncovered that below did not address -- like checking the length of the number in process at arrStatus === 0):
+
+// basic use case (normal // expected use)
+
+//     Storing / sending for evaluation / displaying / clearing memory.
+
+//       Refactor --- using same example '5 * 2 / 5 ='
+
+//       memory after each 'step'
+//         [5] - user
+//         [5, *] - user
+//         [5, *, 2] - user
+//         [5, *, 2, 10] - evaluate [0,1,2] / append result to end [3], display result [3]
+//         [5, *, 2, 10, /] - user 
+//         [5, *, 2, 10, /, 2] - user
+//         [5, *, 2, 10, /, 2, 5] evaluate [3,4,5] / append result to end [6], display result [6]
+
+//         - based on this, it looks like we need to evaluate the array's last 3 elements and if it matches a pattern of operand - operator - operand, then we evaluate, append to array and display 
+
+//       for the refactored path we'd need to use:
+//         - memory to hold user inputs and the returned evaluations  (done)
+//         - array method to append user inputs / evaluations to memory (push())
+//         - array method to evaluate last 3 elements of array (switch or generic conditional)
+//         - clear array function when user hits clear (splice() with a 100 element delete argument )
+//         - pre-path logic that REPLACES the last operator in the array if operator is hit. ex: user hit wrong operator, or hit same operator twice or more times.  (if operator, check last element to see if its also an operator. if different operator, replace last element not append array, else, don't append array and continue)
 
 
+//     Attack evaluating the inputs and refining the output before display; 
+
+//       - input  ** waiting to be coded out ***
+//           at array[]
+//             - disable(or ignore) all inputs except numbers, and dot 
+//               - once dot has been clicked, and another number has been clicked, disable dot button until operator button hit
+//             - if minus is hit display message "premium feature"
+//           at array[0]
+//             - enable all inputs and handle per refactor logic above
+//              - if the next to last element is a '/' and the last is '0' = display "Div by 0 Error" and disable all buttons except clear (maybe turn it a different color too)
 
 
-
-/* 
-pseudocode for calc logic ( there have been updates in the code blocks as new things were uncovered that below did not address -- like checking the length of the number in process at arrStatus === 0):
-
-basic use case (normal // expected use)
-
-    Storing / sending for evaluation / displaying / clearing memory.
-
-      Refactor --- using same example '5 * 2 / 5 ='
-
-      memory after each 'step'
-        [5] - user
-        [5, *] - user
-        [5, *, 2] - user
-        [5, *, 2, 10] - evaluate [0,1,2] / append result to end [3], display result [3]
-        [5, *, 2, 10, /] - user 
-        [5, *, 2, 10, /, 2] - user
-        [5, *, 2, 10, /, 2, 5] evaluate [3,4,5] / append result to end [6], display result [6]
-
-        - based on this, it looks like we need to evaluate the array's last 3 elements and if it matches a pattern of operand - operator - operand, then we evaluate, append to array and display 
-
-      for the refactored path we'd need to use:
-        - memory to hold user inputs and the returned evaluations  (done)
-        - array method to append user inputs / evaluations to memory (push())
-        - array method to evaluate last 3 elements of array (switch or generic conditional)
-        - clear array function when user hits clear (splice() with a 100 element delete argument )
-        - pre-path logic that REPLACES the last operator in the array if operator is hit. ex: user hit wrong operator, or hit same operator twice or more times.  (if operator, check last element to see if its also an operator. if different operator, replace last element not append array, else, don't append array and continue)
-
-
-    Attack evaluating the inputs and refining the output before display; 
-
-      - input  ** waiting to be coded out ***
-          at array[]
-            - disable(or ignore) all inputs except numbers, and dot 
-              - once dot has been clicked, and another number has been clicked, disable dot button until operator button hit
-            - if minus is hit display message "premium feature"
-          at array[0]
-            - enable all inputs and handle per refactor logic above
-             - if the next to last element is a '/' and the last is '0' = display "Div by 0 Error" and disable all buttons except clear (maybe turn it a different color too)
-
-
-      - output
-        - Round to 4 decimal places if needed. Don't put 0's on to pad.  (conditional that tests how many decimal places are in the returned evaluation and calls round(), else doesn't change value.)
+//       - output
+//         - Round to 4 decimal places if needed. Don't put 0's on to pad.  (conditional that tests how many decimal places are in the returned evaluation and calls round(), else doesn't change value.)
         
 
-      - handling memory (DONE)
-        - if statement to check length of array
+//       - handling memory (DONE)
+//         - if statement to check length of array
 
      
      
-      - evaluating  (DONE)
-        - this is already handled in the operate() function - we pass num1, num2, num3  from the memory
+//       - evaluating  (DONE)
+//         - this is already handled in the operate() function - we pass num1, num2, num3  from the memory
 
 
-let's get it done!! 
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// let's get it done!
