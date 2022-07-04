@@ -40,10 +40,10 @@ calcButtons.forEach((button) =>
       numberOrOperatorInProgress.push(button.id),
       display(),
       memoryHandler(),
-      console.log(evaluateLastAction())
-    )
-  )
-);
+      console.log(evaluateLastAction()),
+      console.log(uncommittedNumber(uncommittedNumber().length - 1)),
+      console.log(uncommittedNumber())
+)))
  // logic - this is how we get the button clicked on the page into the numberOrOperatorInProgress and how we display the numbers on the screen at the time of click.
 
 
@@ -103,7 +103,7 @@ function memoryHandler(arrStatus = memory.length) { //all logic in this function
   }
 }
 
-function evaluateLastAction(lastAction = uncommittedNumber()) {
+function evaluateLastAction(lastAction = uncommittedNumber((uncommittedNumber().length - 1))) {
   switch (lastAction) {
     case "=":
       break;
@@ -113,10 +113,9 @@ function evaluateLastAction(lastAction = uncommittedNumber()) {
       if (lastAction === "*") operate(num1, num2, multiply);
       if (lastAction === "/") operate(num1, num2, divide);
       break;
-    case "dot":
+    case ".":
       /* this will hold all the dot logic of when to allow and when to disallow, as well as when to effectively toggle the dot on the screen */
-      (uncommittedNumber().length = "0" || uncommittedNumber().includes(".")) ? console.log("we have a dot do ignore") : console.log("false leg of dot switch")
-      
+      (lastAction === "." && uncommittedNumber().includes(".", -1)) ? console.log("we have a dot to ignore") : console.log("false leg of dot switch");
 
       break;
     case "clear":
@@ -125,6 +124,7 @@ function evaluateLastAction(lastAction = uncommittedNumber()) {
       break;
     default:
       console.log("there has been an error in the evaluate last Action switch");
+     
   };
 }
 // /* 
