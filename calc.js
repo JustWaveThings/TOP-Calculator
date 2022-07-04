@@ -117,7 +117,6 @@ function evaluateLastAction(lastAction = uncommittedNumber()) {
       /* this will hold all the dot logic of when to allow and when to disallow, as well as when to effectively toggle the dot on the screen */
       (uncommittedNumber().length = "0" || uncommittedNumber().includes(".")) ? console.log("we have a dot do ignore") : console.log("false leg of dot switch")
       
-      
 
       break;
     case "clear":
