@@ -40,7 +40,7 @@ calcButtons.forEach((button) =>
       numberOrOperatorInProgress.push(button.id),
       display(),
       memoryHandler(),
-      console.log(numberOrOperatorInProgress[numberOrOperatorInProgress["length"] - 1]),
+      console.log(`The last entry on the calculator was ${numberOrOperatorInProgress[numberOrOperatorInProgress["length"] - 1]}`),
       evaluateLastAction()
     )
   )
@@ -128,10 +128,17 @@ function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOper
       operate(num1, num2, divide);
       break;
     case ".":
-      /* this will hold all the dot logic of when to allow and when to disallow, as well as when to effectively toggle the dot on the screen */
-      lastAction === "." /*&& uncommittedNumber().includes(".", -1))*/
-        ? console.log("true leg of dot switch")
-        : console.log("false leg of dot switch");
+      /* this will hold all the dot logic of when to allow and when to disallow, as well as when to effectively toggle the dot on the screen
+      -- dot cases to address
+        -- arr[0] = . -- needs to be allowed
+        -- arr[0,1] or any sequential .. that would need to be 'toggled' - the last two dots would need to be removed from array.
+        -- else -- 2nd dot on arr would need to be ignored
+      
+      
+      */
+      (lastAction === "." &&  numberOrOperatorInProgress.includes[".", -1])
+        ? console.log("true leg of dot switch - need to remove dot from array or toggle the dot")
+        : console.log("false leg of dot switch - need to ignore dot - remove from end of array");
       break;
     case "clear":
       console.log("user input clear");
