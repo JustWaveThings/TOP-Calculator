@@ -140,7 +140,7 @@ function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOper
         console.log("allow the dot");
       } else if (lastAction === "." && numberOrOperatorInProgress[numberOrOperatorInProgress.length - 2] === ".") {
         console.log("two dots in a row - need to remove both dots from array");
-      } else if (lastAction === "." && numberOrOperatorInProgress.reverse().includes(".", 1)) {
+      } else if (lastAction === "." && numberOrOperatorInProgress.reverse().includes('.', 1)) {
         console.log("remove last dot, one already exists");
       } else {
         console.log("allow the dot");
