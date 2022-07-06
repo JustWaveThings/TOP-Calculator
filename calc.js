@@ -39,7 +39,7 @@ calcButtons.forEach((button) =>
     (e) => (
       numberOrOperatorInProgress.push(button.id),
       display(),
-      memoryHandler(),
+      //memoryHandler(),
       console.log(`The last entry on the calculator was ${numberOrOperatorInProgress[numberOrOperatorInProgress["length"] - 1]}`),
       evaluateLastAction()
     )
@@ -136,9 +136,15 @@ function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOper
       
       
       */
-      (lastAction === "." &&  numberOrOperatorInProgress.includes[".", -1])
-        ? console.log("true leg of dot switch - need to remove dot from array or toggle the dot")
-        : console.log("false leg of dot switch - need to ignore dot - remove from end of array");
+      if (lastAction === "." && !numberOrOperatorInProgress.includes(".")) {
+        console.log("allow the dot");
+      } else if (lastAction === "." && numberOrOperatorInProgress[numberOrOperatorInProgress.length - 2] === ".") {
+        console.log("two dots in a row - need to remove both dots from array");
+      } else if (lastAction === "." && numberOrOperatorInProgress.reverse().includes(".", 1)) {
+        console.log("remove last dot, one already exists");
+      } else {
+        console.log("allow the dot");
+      }
       break;
     case "clear":
       console.log("user input clear");
