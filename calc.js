@@ -40,16 +40,19 @@ calcButtons.forEach((button) =>
       numberOrOperatorInProgress.push(button.id),
       display(),
       memoryHandler(),
-      console.log(evaluateLastAction()),
-      console.log(uncommittedNumber(uncommittedNumber().length - 1)),
-      console.log(uncommittedNumber())
-)))
+      console.log(numberOrOperatorInProgress[numberOrOperatorInProgress["length"] - 1]),
+      evaluateLastAction()
+    )
+  )
+);
  // logic - this is how we get the button clicked on the page into the numberOrOperatorInProgress and how we display the numbers on the screen at the time of click.
 
 
 const display = () => document.getElementById('displayNums').textContent = numberOrOperatorInProgress.join(''); // dom
 
 const uncommittedNumber = display; // separates logic from dom use
+
+const uncommittedArr = [...uncommittedNumber()];
 
 // handle logic section  // no dom manipulation allowed here. 
 
@@ -103,28 +106,38 @@ function memoryHandler(arrStatus = memory.length) { //all logic in this function
   }
 }
 
-function evaluateLastAction(lastAction = uncommittedNumber((uncommittedNumber().length - 1))) {
+function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOperatorInProgress['length']-1]) {
   switch (lastAction) {
     case "=":
+      console.log("user input equals");
       break;
-    case "+" || "-" || "*" || "/":
-      if (lastAction === "+") operate(num1, num2, add);
-      if (lastAction === "-") operate(num1, num2, subtract);
-      if (lastAction === "*") operate(num1, num2, multiply);
-      if (lastAction === "/") operate(num1, num2, divide);
+    case "+":
+      console.log("user input a plus");
+      operate(num1, num2, add);
+      break;
+    case "-":
+      console.log("user input a minus");
+      operate(num1, num2, subtract);
+      break;
+    case "x":
+      console.log("user input a multiplication operator");
+      operate(num1, num2, multiply);
+      break;
+    case "/":
+      console.log("user input a division operator");
+      operate(num1, num2, divide);
       break;
     case ".":
       /* this will hold all the dot logic of when to allow and when to disallow, as well as when to effectively toggle the dot on the screen */
-      (lastAction === "." && uncommittedNumber().includes(".", -1)) ? console.log("we have a dot to ignore") : console.log("false leg of dot switch");
-
+      lastAction === "." /*&& uncommittedNumber().includes(".", -1))*/
+        ? console.log("true leg of dot switch")
+        : console.log("false leg of dot switch");
       break;
     case "clear":
-      break;
-    case "nums":
+      console.log("user input clear");
       break;
     default:
-      console.log("there has been an error in the evaluate last Action switch");
-     
+      console.log("user input number");
   };
 }
 // /* 
