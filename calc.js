@@ -7,6 +7,8 @@ divide
 Create a new function operate that takes an operator and 2 numbers and then calls one of the above functions on the numbers.
 */
 
+
+
 function add(num1, num2) {
     return num1 + num2;
 }
@@ -19,7 +21,7 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
   return num1 / num2;
 }
-function operate (num1, num2, operation) {
+function operate(num1, num2, operation) {
     return operation(num1, num2);
 }
 
@@ -40,8 +42,10 @@ calcButtons.forEach((button) =>
       numberOrOperatorInProgress.push(button.id),
       display(),
       //memoryHandler(),
-      console.log(`The last entry on the calculator was ${numberOrOperatorInProgress[numberOrOperatorInProgress["length"] - 1]}`),
-      evaluateLastAction()
+     // console.log(`The last entry on the calculator was ${numberOrOperatorInProgress[numberOrOperatorInProgress["length"] - 1]}`),
+      evaluateLastAction(),
+      console.log(`current items in memory -  ${memory}`),
+      evaluateMemoryPattern()
     )
   )
 );
@@ -68,7 +72,7 @@ const uncommittedNumberLengthDefinitions = {
 
 // memoryHandler is main workhorse of the calc.  It's responsible for monitoring numberOrOperatorInProgress and memory and acting when certain conditions of them each are met and calling the utility functions to 'operate the calc. I will be very interested to see how others have completed this part of the project. I have many nested conditionals and that makes me nervous but I don't see a way around it. 
 
-function memoryHandler(arrStatus = memory.length) { //all logic in this function 
+function memoryHandler(arrStatus = memory.length) { 
   if (arrStatus === arrayStatusObj.empty) {
     /*
        - if displayValue.length is === 0,  ignore all inputs except numbers, and dot.
@@ -108,14 +112,21 @@ function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOper
   switch (lastAction) {
     case "=":
       console.log("user input equals");
+      numberOrOperatorInProgress.pop();
+      memory.push(numberOrOperatorInProgress.join(""));
+      numberOrOperatorInProgress.length = 0;
+      // evaluate memory for required elements - if present calculate, and append calculated result to memory array
       break;
     case "+":
     case "-":
     case "x":
     case "/":
-      console.log("user input an operator");
+      //console.log("user input an operator");
+      let tempOperator = numberOrOperatorInProgress.pop();
       memory.push(numberOrOperatorInProgress.join(""));
-      console.log(`current items in memory -  ${memory}`)
+      memory.push(tempOperator);
+      numberOrOperatorInProgress.length = 0;
+      
       break;
     case ".":
       if (!numberOrOperatorInProgress.includes(".")) {
@@ -129,12 +140,26 @@ function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOper
       }
       break;
     case "clear":
-      console.log("user input clear");
+      //console.log("user input clear");
       break;
     default:
-      console.log("user input number");
+      //console.log("user input number");
   };
 }
+
+
+// evaluate memory pattern function  - looking at last 3 elements, and if they fit operand, operator, operand format, we'd evaluate then push the result to the array
+
+function evaluateMemoryPattern(num1 = memory[memory.length-3], operator = memory[memory.length-2], num2 = memory[memory.length-1]) {
+  if (memory[memory.length - 2] === "+" ||)  // todo --- address issue where + not the same as 'add' operator in true operator
+  if (memory.length >= 3) {
+    (!isNaN(num1) && isNaN(operator) && !isNaN(num2)) ? memory.push(operate(num1, num2, operator)) : console.log("there is an error in the memory");
+  }
+  }
+
+
+
+
 // /* 
 // pseudocode for calc logic ( there have been updates in the code blocks as new things were uncovered that below did not address -- like checking the length of the number in process at arrStatus === 0):
 
