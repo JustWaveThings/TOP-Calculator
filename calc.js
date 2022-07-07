@@ -50,9 +50,7 @@ calcButtons.forEach((button) =>
 
 const display = () => document.getElementById('displayNums').textContent = numberOrOperatorInProgress.join(''); // dom
 
-const uncommittedNumber = display; // separates logic from dom use
 
-const uncommittedArr = [...uncommittedNumber()];
 
 // handle logic section  // no dom manipulation allowed here. 
 
@@ -68,7 +66,7 @@ const uncommittedNumberLengthDefinitions = {
   empty: 0,
 }
 
-// memoryHandler is main workhorse of the calc.  It's responsible for monitoring uncommittedNumber and memory and acting when certain conditions of them each are met and calling the utility functions to 'operate the calc. I will be very interested to see how others have completed this part of the project. I have many nested conditionals and that makes me nervous but I don't see a way around it. 
+// memoryHandler is main workhorse of the calc.  It's responsible for monitoring numberOrOperatorInProgress and memory and acting when certain conditions of them each are met and calling the utility functions to 'operate the calc. I will be very interested to see how others have completed this part of the project. I have many nested conditionals and that makes me nervous but I don't see a way around it. 
 
 function memoryHandler(arrStatus = memory.length) { //all logic in this function 
   if (arrStatus === arrayStatusObj.empty) {
@@ -112,35 +110,19 @@ function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOper
       console.log("user input equals");
       break;
     case "+":
-      console.log("user input a plus");
-      operate(num1, num2, add);
-      break;
     case "-":
-      console.log("user input a minus");
-      operate(num1, num2, subtract);
-      break;
     case "x":
-      console.log("user input a multiplication operator");
-      operate(num1, num2, multiply);
-      break;
     case "/":
-      console.log("user input a division operator");
-      operate(num1, num2, divide);
+      console.log("user input an operator");
+      memory.push(numberOrOperatorInProgress.join(""));
+      console.log(`current items in memory -  ${memory}`)
       break;
     case ".":
-      /* this will hold all the dot logic of when to allow and when to disallow, as well as when to effectively toggle the dot on the screen
-      -- dot cases to address
-        -- arr[0] = . -- needs to be allowed
-        -- arr[0,1] or any sequential .. that would need to be 'toggled' - the last two dots would need to be removed from array.
-        -- else -- 2nd dot on arr would need to be ignored
-      
-      
-      */
-      if (lastAction === "." && !numberOrOperatorInProgress.includes(".")) {
+      if (!numberOrOperatorInProgress.includes(".")) {
         console.log("allow the dot");
-      } else if (lastAction === "." && numberOrOperatorInProgress[numberOrOperatorInProgress.length - 2] === ".") {
+      } else if ( numberOrOperatorInProgress[numberOrOperatorInProgress.length - 2] === ".") {
         console.log("two dots in a row - need to remove both dots from array");
-      } else if (lastAction === "." && numberOrOperatorInProgress.reverse().includes('.', 1)) {
+      } else if ( numberOrOperatorInProgress.slice(0,-1).includes('.')) {
         console.log("remove last dot, one already exists");
       } else {
         console.log("allow the dot");
