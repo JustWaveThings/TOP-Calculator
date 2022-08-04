@@ -22,6 +22,8 @@ function divide(num1, num2) {
   return num1 / num2;
 }
 function operate(num1, num2, operation) {
+    console.log(typeof num1, typeof num2, typeof operation);
+    console.log(num1, num2, operation);
     return operation(num1, num2);
 }
 
@@ -44,7 +46,7 @@ calcButtons.forEach((button) =>
       //memoryHandler(),
      // console.log(`The last entry on the calculator was ${numberOrOperatorInProgress[numberOrOperatorInProgress["length"] - 1]}`),
       evaluateLastAction(),
-      console.log(`current items in memory -  ${memory}`),
+     // console.log(`current items in memory -  ${memory}`),
       evaluateMemoryPattern()
     )
   )
@@ -117,10 +119,10 @@ function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOper
       numberOrOperatorInProgress.length = 0;
       // evaluate memory for required elements - if present calculate, and append calculated result to memory array
       break;
-    case "+":
-    case "-":
-    case "x":
-    case "/":
+    case "add":
+    case "subtract":
+    case "multiply":
+    case "divide":
       //console.log("user input an operator");
       let tempOperator = numberOrOperatorInProgress.pop();
       memory.push(numberOrOperatorInProgress.join(""));
@@ -150,14 +152,18 @@ function evaluateLastAction(lastAction = numberOrOperatorInProgress[numberOrOper
 
 // evaluate memory pattern function  - looking at last 3 elements, and if they fit operand, operator, operand format, we'd evaluate then push the result to the array
 
-function evaluateMemoryPattern(num1 = memory[memory.length-3], operator = memory[memory.length-2], num2 = memory[memory.length-1]) {
-  if (memory[memory.length - 2] === "+" ||)  // todo --- address issue where + not the same as 'add' operator in true operator
+function evaluateMemoryPattern(num1 = +memory[memory.length - 4], operator = memory[memory.length - 3], num2 = +memory[memory.length - 2]) {
+  console.log(num1, operator, num2);
   if (memory.length >= 3) {
-    (!isNaN(num1) && isNaN(operator) && !isNaN(num2)) ? memory.push(operate(num1, num2, operator)) : console.log("there is an error in the memory");
+    if (!isNaN(num1) && isNaN(operator) && !isNaN(num2)) {
+      console.log(typeof num1, typeof operator, typeof num2);
+      console.log(num1, operator, num2);
+      memory.push(operate(num1, num2, operator))
+    } else {
+      console.log("there is an error in the memory");
+    }
   }
-  }
-
-
+};
 
 
 // /* 
@@ -214,3 +220,10 @@ function evaluateMemoryPattern(num1 = memory[memory.length-3], operator = memory
 
 
 // let's get it done!
+
+// function operate(num1, num2, operation) {
+//   console.log(typeof num1, typeof num2, typeof operation);
+//   console.log(num1, num2, operation);
+//   // return operation(num1, num2);
+// }
+operate(2, 5, add);
