@@ -26,53 +26,71 @@ Plan
 */
 const memory = []; // need to hold completed numbers / operands for eval by calculate function
 const currentMemory = []; // need array for current 'uncommitted' number / operand
-const displayScreen = []; // need array for what will be seen by user on display
-
+const displayScreen = []; // need array for what will be seen by user on display which is different than the current memory
+let result = 0;
 
 function add(num1, num2) {
-  return num1 + num2;
+  result = num1 + num2;
+  return result;
 }
 
 function subtract(num1, num2) {
-  return num1 - num2;
+  result = num1 - num2;
+  return result;
 }
 
 function multiply(num1, num2) {
-  return num1 * num2;
+  result = num1 * num2;
+  return result;
 }
 
 function divide(num1, num2) {
-  return num1 / num2;
+  result = num1 / num2;
+  return result;
 }
 
 function operate(num1 = memory[memory.length - 3], num2 = memory[memory.length - 1], operation = memory[memory.length - 2]) {
   if (isFinite(num1) && isFinite(num2) && (typeof(operation) === "string")) {
     if (operation === '/' && num2 === 0) return console.log("divide by zero error");
-    if (operation === '+') return add(num1, num2);
-    if (operation === '-') return subtract(num1, num2);
-    if (operation === '*') return multiply(num1, num2);
-    if (operation === '/') return divide(num1, num2);
+    (operation === '+') ? add(num1, num2) : "";
+    (operation === '-') ? subtract(num1, num2): "";
+    (operation === '*') ? multiply(num1, num2): "";
+    (operation === '/') ? divide(num1, num2):  "";
   } else {
+    // need to catch improper input ex: [=, =]
     console.log("ERROR");
   }
-  console.log("test");
+  // need to clear the evaluated operands/operators from memory array to be replaced by result
+  for (let i = 1; i <= 3; i++) {
+    memory.pop(memory.length - i);
+  }
+  memory.push(result);
+  displayScreen.push(result);
+  currentDisplay();
+  console.log(`memory - ${memory}`); 
 }
 
-function equals(operator = memory[memory.length - 1]) {
-  if (operator === '=') return operate();
+function currentDisplay() {
+  console.log(`displayScreen - ${displayScreen}`);
 }
 
-function clear() {
-    memory.splice(0, memory.length);
-    currentMemory.splice(0, currentMemory.length);
-    displayScreen.splice(0, displayScreen.length);
-    console.log("CLEAR");
+function equals() {
+  return operate();
 }
 
-function backspace(currentMem = currentMemory){
-    currentMem.pop();
-    //displayScreen.pop();
-    console.log("<<");
+function clearScreen() {
+  displayScreen.splice(0, displayScreen.length);
 }
 
+function clearAll() {
+  memory.splice(0, memory.length);
+  currentMemory.splice(0, currentMemory.length);
+  displayScreen.splice(0, displayScreen.length);
+  console.log("CLEAR");
+}
 
+function backspace(currentMem = currentMemory, dispScreen = displayScreen){
+  currentMem.pop();
+  dispScreen.pop();
+  console.log("<<"); 
+}
