@@ -57,10 +57,8 @@ function operate(num1 = memory[memory.length - 3], num2 = memory[memory.length -
     (operation === '*') ? multiply(num1, num2): "";
     (operation === '/') ? divide(num1, num2):  "";
   } else {
-    // need to catch improper input ex: [=, =]
     console.log("ERROR");
   }
-  // need to clear the evaluated operands/operators from memory array to be replaced by result
   for (let i = 1; i <= 3; i++) {
     memory.pop(memory.length - i);
   }
