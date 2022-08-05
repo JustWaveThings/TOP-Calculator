@@ -74,6 +74,7 @@
 }
 
 .num,
+.other,
 .operator,
 .equal {
     display: flex;
@@ -86,6 +87,9 @@
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
+.other {
+    background-color: #ff7f5050;
+}
 
 
 .num {
@@ -93,7 +97,6 @@
 }
 
 .equal {
-   
    background-color: rgb(247, 100, 125);
 }
 
