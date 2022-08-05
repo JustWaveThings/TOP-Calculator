@@ -92,3 +92,18 @@ function backspace(currentMem = currentMemory, dispScreen = displayScreen){
   dispScreen.pop();
   console.log("<<"); 
 }
+
+const calcButtons = document.querySelectorAll('.num , .operator, .equal');  
+
+calcButtons.forEach((button) =>
+  button.addEventListener(
+    "click",
+    (e) => (
+      currentMemory.push(button.id),
+      displayScreen.push(button.id)
+  )
+  )
+)
+
+const display = () => document.getElementById('displayNums').textContent = displayScreen.join(''); 
+
